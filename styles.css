@@ -1,0 +1,64 @@
+body {
+    background-color: #EEF9BF;
+    font-family: 'Roboto', sans-serif;
+}
+
+h1 {
+    font-weight: bold;
+    font-size: 36px;
+    line-height: 42px;
+    text-align: center;
+    letter-spacing: -0.004em;
+    width: 75%;
+    height: 63px;
+    color: #75B79E;
+    margin: 40px auto 30px auto;
+}
+
+.cartas {
+    width: 80%;
+    flex-shrink: 0;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.carta {
+    position: relative;
+    box-sizing: border-box;
+    width: 117px;
+    height: 146px;
+    margin: 17px;
+    background: #A7E9AF;
+    border: 1px solid #99CEA8;
+    border-radius: 5px;
+}
+
+.face {
+    backface-visibility: hidden;
+    transition: all .5s;
+    transform-style: preserve-3d;
+}
+
+.frente {
+    position: absolute;
+    top: 24px;
+    left: 10px;
+}
+
+.frente img {
+    width: 100px;
+}
+
+.verso {
+    position: absolute;
+    top: 55px;
+    left: 40px;
+}
+
+.escondida {
+    transform: rotateY(180deg);
+}
+
+
