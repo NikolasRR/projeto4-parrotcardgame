@@ -26,39 +26,35 @@ h1 {
 
 .carta {
     position: relative;
-    box-sizing: border-box;
     width: 117px;
     height: 146px;
     margin: 17px;
-    background: #A7E9AF;
-    border: 1px solid #99CEA8;
-    border-radius: 5px;
 }
 
 .face {
+    height: 100%;
+    width: 100%;
+    background: #A7E9AF;
+    border: 1px solid #99CEA8;
+    border-radius: 5px;
     backface-visibility: hidden;
     transition: all .5s;
     transform-style: preserve-3d;
-}
-
-.frente {
+    display: flex;
+    align-items: center;
+    justify-content: center;
     position: absolute;
-    top: 24px;
-    left: 10px;
 }
 
-.frente img {
+.face img {
     width: 100px;
 }
 
-.verso {
-    position: absolute;
-    top: 55px;
-    left: 40px;
-}
-
-.escondida {
+.naoVisivel {
     transform: rotateY(180deg);
 }
+
+
+
 
 
