@@ -4,8 +4,9 @@ let contadorDeJogadas = 0;
 let gifCarta1 = null;
 let gifCarta2 = null;
 
-// Inicializo a função que pergunta o número de cartas, após ser respondida, começa a contagem de segundos
+// Inicializo a função que pergunta o número de cartas, após ser respondida
 perguntarNumeroDeCartas();
+// Começa o intervalo que vai adicionar 1 no relogio a cada segundo
 let intervaloDoRelogio = setInterval(relogio, 1000);
 
 // Função que pergunta o número das cartas
@@ -25,7 +26,7 @@ function comparador() {
 	return Math.random() - 0.5; 
 }
 
-// Função que adiciona cartas, recebe como argumento o número de cartas escolhido
+// Função que adiciona cartas, recebe como parâmetro o número de cartas escolhido
 function adicionarXCartas (numeroDeCartas) {
     // Busco o elemento que irá conter as cartas
     const elementoDasCartas = document.querySelector(".cartas");
@@ -49,7 +50,7 @@ function adicionarXCartas (numeroDeCartas) {
     }
 }
 
-// Função que vira a carta, recebe como argumento a carta clicada
+// Função que vira a carta, recebe como parâmetro a carta clicada
 function virarCarta (estaCarta) {
     // A primeira div sempre é onde está o papagaio, e a segunda onde está o gif
     const papagaio = estaCarta.querySelector(".carta div:first-child");
@@ -69,44 +70,37 @@ function virarCarta (estaCarta) {
     } 
 }
 
-function desvirarCartas (carta1, carta2) {
-    const papagaioCarta1 = carta1.querySelector("div:first-child");
-    const gifCarta1 = carta1.querySelector("div:last-child");
-    const papagaioCarta2 = carta2.querySelector("div:first-child");
-    const gifCarta2 = carta2.querySelector("div:last-child");
-
-    papagaioCarta1.classList.remove("naoVisivel");
-    gifCarta1.classList.add("naoVisivel");
-    carta1.classList.remove("virada");
-
-    papagaioCarta2.classList.remove("naoVisivel");
-    gifCarta2.classList.add("naoVisivel");
-    carta2.classList.remove("virada");
-}
-
+// Função para comparar as cartas, recebe o gif da carta que foi clicada como parâmetro
 function compararCartas (gif) {
+    // Puxo a lista de cartas viradas, sempre terá uma ou duas posições, carta1 e carta2
     const cartasViradas = document.querySelectorAll(".virada");
     const carta1 = cartasViradas[0];
     const carta2 = cartasViradas[1];
+    // Se gifCarta1 não tiver valor, é porque a carta clicada é a carta1, então recebe o conteúdo de 'gif'
     if (gifCarta1 === null) {
         gifCarta1 = gif;
-    } else if (gifCarta2 === null) {
+        // gifCarta1 não tendo valor nulo, se trata da segunda carta, 
+    } else {
         gifCarta2 = gif;
+        // Comparo os elementos de gif das duas cartas
         const cartasIguais = gifCarta1.isEqualNode(gifCarta2);
         if (cartasIguais) {
+            // Retiro a classe 'virada' e adiciono a classe 'parEncontrado'
             carta1.classList.remove("virada");
             carta1.classList.add("parEncontrado");
             carta2.classList.remove("virada");
             carta2.classList.add("parEncontrado");
-    
+            // Reseto o conteúdo dessa variáveis
             gifCarta1 = null;
             gifCarta2 = null;
-
+            // Puxo a lista com todos os pares encontrados até então e verifico se ainda se ainda sobraram 
             let paresEncontrados = document.querySelectorAll(".parEncontrado").length
             if (paresEncontrados === parseInt(numeroDeCartas)) {
+                // Com todos os pares encontrados, é executada a função oJogoAcabou
                 setTimeout(oJogoAcabou, 500)
             }
         } else {
+            // Caso as cartas não sejam iguais, o valor das variáveis é resetado, e a função desvirarCartas é chamada
             setTimeout(desvirarCartas, 1000, carta1, carta2);
             gifCarta1 = null;
             gifCarta2 = null;
@@ -114,27 +108,53 @@ function compararCartas (gif) {
     } 
 }
 
+// Função para desvirar as cartas caso não sejam iguais, recebe as cartas 1 e 2 como parâmetros
+function desvirarCartas (carta1, carta2) {
+    // Puxo as divs contendo os papagaios e gifs
+    const papagaioCarta1 = carta1.querySelector("div:first-child");
+    const gifCarta1 = carta1.querySelector("div:last-child");
+    const papagaioCarta2 = carta2.querySelector("div:first-child");
+    const gifCarta2 = carta2.querySelector("div:last-child");
+    // Desviro a carta 1
+    papagaioCarta1.classList.remove("naoVisivel");
+    gifCarta1.classList.add("naoVisivel");
+    carta1.classList.remove("virada");  
+    // Desviro a carta 2
+    papagaioCarta2.classList.remove("naoVisivel");
+    gifCarta2.classList.add("naoVisivel");
+    carta2.classList.remove("virada");
+    // OBS: não sei de 'desvirar' é uma palavra
+}
+
+// Função para indicar o término do jogo
 function oJogoAcabou () {
+    // Paro o contador de segundos, e puxo seu valor para mandar na mensagem do alert
     clearInterval(intervaloDoRelogio);
     const elementoRelogio = document.querySelector("span").innerHTML;
     alert(`Você ganhou o jogo em ${contadorDeJogadas} jogadas e levou ${elementoRelogio} segundos`);
-    const respostaSimOuNao = prompt("Deseja comoçar um novo jogo? Responda sim para jogar novamente");
+    // Prompt perguntando se quer jogar novamente
+    const respostaSimOuNao = prompt("Deseja comoçar um novo jogo? Responda 'sim' para jogar novamente");
+    // Caso queira jogar, a função reiniciarJogo é chamada
     if (respostaSimOuNao === "sim") {
         reiniciarJogo();
+        // Caso não queira jogar, um botão é adicionado no fundo da página para reinicar quando quiser
     } else {
         const footer = document.querySelector("footer");
         footer.innerHTML = `<button onclick="reiniciarJogo();">Reiniciar jogo</button>`
     }
 }
 
+// Função que 'conta' os segundos passados
 function relogio () {
+    // Puxo o elemento span, transformo em Int e adiciono 1
     const elementoRelogio = document.querySelector("span");
     let segundosEmInt = parseInt(elementoRelogio.innerHTML);
     elementoRelogio.innerHTML = segundosEmInt + 1;
 }
 
+// Função para reiniciar o jogo
 function reiniciarJogo () {
-
+    // Zero o número de jogadas, de segundos, removo todas as cartas e o botão de reiniciar
     contadorDeJogadas = 0;
 
     const elementoRelogio = document.querySelector("span");
@@ -146,6 +166,8 @@ function reiniciarJogo () {
     const footer = document.querySelector("footer");
     footer.innerHTML = null;
 
+    // Inicializo a função que pergunta o número de cartas, após ser respondida
     perguntarNumeroDeCartas();
+    // Começa o intervalo que vai adicionar 1 no relogio a cada segundo
     intervaloDoRelogio = setInterval(relogio, 1000);
 }
