@@ -43,9 +43,9 @@ function adicionarXCartas (numeroDeCartas) {
     // Finalmente o for adiciona o número de cartas escolhidas
     for (i = 0; i < numeroDeCartas; i++) {
         elementoDasCartas.innerHTML += 
-        `<div class="carta" onclick="virarCarta(this);">
-            <div class="face"><img src="/Gifs e Imgs/front.png"></div>
-            <div class="face naoVisivel"><img src="/Gifs e Imgs/${gifs[i]}.gif"></div>
+        `<div class="carta" onclick="virarCarta(this);" data-identifier="card">
+            <div class="face" data-identifier="front-face"><img src="/Gifs e Imgs/front.png"></div>
+            <div class="face naoVisivel" data-identifier="back-face"><img src="/Gifs e Imgs/${gifs[i]}.gif"></div>
         </div>`;
     }
 }
@@ -131,7 +131,7 @@ function oJogoAcabou () {
     // Paro o contador de segundos, e puxo seu valor para mandar na mensagem do alert
     clearInterval(intervaloDoRelogio);
     const elementoRelogio = document.querySelector("span").innerHTML;
-    alert(`Você ganhou o jogo em ${contadorDeJogadas} jogadas e levou ${elementoRelogio} segundos`);
+    alert(`Você ganhou o jogo em ${contadorDeJogadas} jogadas! Levando ${elementoRelogio} segundos`);
     // Prompt perguntando se quer jogar novamente
     const respostaSimOuNao = prompt("Deseja comoçar um novo jogo? Responda 'sim' para jogar novamente");
     // Caso queira jogar, a função reiniciarJogo é chamada
