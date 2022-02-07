@@ -44,8 +44,8 @@ function adicionarXCartas (numeroDeCartas) {
     for (i = 0; i < numeroDeCartas; i++) {
         elementoDasCartas.innerHTML += 
         `<div class="carta" onclick="virarCarta(this);" data-identifier="card">
-            <div class="face" data-identifier="front-face"><img src="/Gifs e Imgs/front.png"></div>
-            <div class="face naoVisivel" data-identifier="back-face"><img src="/Gifs e Imgs/${gifs[i]}.gif"></div>
+            <div class="face" data-identifier="front-face"><img src="./Gifs-e-Imgs/front.png"></div>
+            <div class="face naoVisivel" data-identifier="back-face"><img src="./Gifs-e-Imgs/${gifs[i]}.gif"></div>
         </div>`;
     }
 }
